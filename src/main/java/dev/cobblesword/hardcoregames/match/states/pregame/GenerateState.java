@@ -1,11 +1,12 @@
-package dev.cobblesword.hardcoregames.match.states;
+package dev.cobblesword.hardcoregames.match.states.pregame;
 
 import dev.cobblesword.hardcoregames.match.Match;
 import dev.cobblesword.hardcoregames.match.MatchState;
+import dev.cobblesword.hardcoregames.match.states.StateBase;
 
-public class FinishState extends StateBase
+public class GenerateState extends StateBase
 {
-    public FinishState(Match match)
+    public GenerateState(Match match)
     {
         super(MatchState.GRACE_PERIOD, match);
     }
@@ -19,7 +20,8 @@ public class FinishState extends StateBase
     @Override
     public void onSeconds()
     {
-
+        // Wait for all chunks to load
+        this.setState(MatchState.WAITING_FOR_PLAYERS);
     }
 
     @Override

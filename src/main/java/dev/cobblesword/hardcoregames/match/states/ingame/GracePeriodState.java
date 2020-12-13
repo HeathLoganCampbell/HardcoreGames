@@ -1,7 +1,8 @@
-package dev.cobblesword.hardcoregames.match.states;
+package dev.cobblesword.hardcoregames.match.states.ingame;
 
 import dev.cobblesword.hardcoregames.match.Match;
 import dev.cobblesword.hardcoregames.match.MatchState;
+import dev.cobblesword.hardcoregames.match.states.StateBase;
 import org.bukkit.Bukkit;
 
 public class GracePeriodState extends StateBase

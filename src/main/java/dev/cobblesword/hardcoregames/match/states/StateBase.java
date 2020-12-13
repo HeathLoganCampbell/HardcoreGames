@@ -1,6 +1,7 @@
 package dev.cobblesword.hardcoregames.match.states;
 
 import dev.cobblesword.hardcoregames.match.Match;
+import dev.cobblesword.hardcoregames.match.MatchOptions;
 import dev.cobblesword.hardcoregames.match.MatchState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,10 @@ public abstract class StateBase implements Listener
     public void setState(MatchState state)
     {
         this.match.setState(state);
+    }
+
+    public MatchOptions getOptions()
+    {
+        return this.getMatch().getOptions();
     }
 }
