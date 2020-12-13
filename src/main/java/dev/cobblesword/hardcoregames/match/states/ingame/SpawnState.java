@@ -16,6 +16,7 @@ public class SpawnState extends StateBase
     {
         // Teleport all players
 
+
         this.setState(MatchState.GRACE_PERIOD);
     }
 

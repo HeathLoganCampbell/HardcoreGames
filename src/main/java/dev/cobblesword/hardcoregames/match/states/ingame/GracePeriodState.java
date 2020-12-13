@@ -4,6 +4,10 @@ import dev.cobblesword.hardcoregames.match.Match;
 import dev.cobblesword.hardcoregames.match.MatchState;
 import dev.cobblesword.hardcoregames.match.states.StateBase;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class GracePeriodState extends StateBase
 {
@@ -39,5 +43,14 @@ public class GracePeriodState extends StateBase
     public void onFinish()
     {
 
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent e)
+    {
+        Entity entity = e.getEntity();
+        if(!(entity instanceof Player)) return;
+        if (e.getCause() == EntityDamageEvent.DamageCause.VOID) return;
+        e.setCancelled(true);
     }
 }

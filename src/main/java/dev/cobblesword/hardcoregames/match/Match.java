@@ -1,5 +1,6 @@
 package dev.cobblesword.hardcoregames.match;
 
+import dev.cobblesword.hardcoregames.HardcoreGamesPlugin;
 import dev.cobblesword.hardcoregames.match.states.*;
 import dev.cobblesword.hardcoregames.match.states.ingame.GracePeriodState;
 import dev.cobblesword.hardcoregames.match.states.ingame.LiveState;
@@ -10,27 +11,38 @@ import dev.cobblesword.hardcoregames.match.states.pregame.GenerateState;
 import dev.cobblesword.hardcoregames.match.states.ingame.SpawnState;
 import dev.cobblesword.hardcoregames.match.states.pregame.WaitingForPlayersState;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 
 import java.util.EnumMap;
 
 public class Match implements Runnable
 {
+    @Getter
     private MatchState state = MatchState.GENERATE;
     private int secondsLeft = 120;
     private EnumMap<MatchState, StateBase> stateHandlers = new EnumMap<>(MatchState.class);
     @Getter
-    private MatchOptions options;
+    private MatchOptions options = new MatchOptions();
+    private HardcoreGamesPlugin plugin;
 
-    public Match()
+    public Match(HardcoreGamesPlugin plugin)
     {
-        stateHandlers.put(MatchState.GENERATE, new GenerateState(this));
-        stateHandlers.put(MatchState.WAITING_FOR_PLAYERS, new WaitingForPlayersState(this));
-        stateHandlers.put(MatchState.COUNTDOWN, new CountdownState(this));
-        stateHandlers.put(MatchState.SPAWN, new SpawnState(this));
-        stateHandlers.put(MatchState.GRACE_PERIOD, new GracePeriodState(this));
-        stateHandlers.put(MatchState.LIVE, new LiveState(this));
-        stateHandlers.put(MatchState.CHAMPION, new ChampionState(this));
-        stateHandlers.put(MatchState.FINISH, new FinishState(this));
+        this.plugin = plugin;
+
+        this.registerStateHandler(new GenerateState(this));
+        this.registerStateHandler(new WaitingForPlayersState(this));
+        this.registerStateHandler(new CountdownState(this));
+        this.registerStateHandler(new SpawnState(this));
+        this.registerStateHandler(new GracePeriodState(this));
+        this.registerStateHandler(new LiveState(this));
+        this.registerStateHandler(new ChampionState(this));
+        this.registerStateHandler(new FinishState(this));
+    }
+
+    private void registerStateHandler(StateBase stateBase)
+    {
+        this.stateHandlers.put(stateBase.getState(), stateBase);
+        Bukkit.getPluginManager().registerEvents(stateBase, plugin);
     }
 
     public void setState(MatchState state)
