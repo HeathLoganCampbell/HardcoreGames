@@ -7,6 +7,7 @@ import dev.cobblesword.hardcoregames.kits.kits.Jumper;
 import dev.cobblesword.hardcoregames.kits.kits.None;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class KitManager
 {
@@ -29,5 +30,10 @@ public class KitManager
     public KitBase getKit(String kitName)
     {
         return this.kits.get(kitName);
+    }
+
+    public Map<String, KitBase> getKitMap()
+    {
+        return this.kits;
     }
 }
